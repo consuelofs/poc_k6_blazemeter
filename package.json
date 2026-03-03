@@ -1,1 +1,10 @@
-{\n  "dependencies": {\n    "k6": "^0.34.0",\n    "bzt": "^1.19.0"\n  }\n}
+{
+  "scripts": {
+    "test": "k6 run tests/hello-world.js",
+    "test:vus": "k6 run --vus 5 --duration 60s tests/hello-world.js"
+  },
+  "dependencies": {
+    "k6": "^0.34.0",
+    "bzt": "^1.19.0"
+  }
+}

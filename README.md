@@ -1,5 +1,56 @@
 # POC: k6 + Taurus + BlazeMeter Integration
 
+## Hello World k6 Test
+
+A simple k6 load test following the [BlazeMeter k6 tutorial](https://www.blazemeter.com/blog/k6-load-testing).
+
+### Install k6
+
+```bash
+# macOS
+brew install k6
+
+# Linux (Debian/Ubuntu)
+sudo gpg -k
+sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+sudo apt-get update
+sudo apt-get install k6
+
+# Windows (Chocolatey)
+choco install k6
+```
+
+### Run the basic test
+
+```bash
+# Run with npm
+npm test
+
+# Run with custom VUs and duration
+npm run test:vus
+
+# Run directly with k6
+k6 run tests/hello-world.js
+
+# Run with custom VUs and duration
+k6 run --vus 5 --duration 60s tests/hello-world.js
+```
+
+### What the test does
+
+The `tests/hello-world.js` test:
+- Sends an HTTP GET request to `https://test.k6.io`
+- Checks that the response status is 200
+- Runs with 1 virtual user (VU) for 30 seconds
+- Reports metrics: request duration, error rate, and throughput
+
+### Use with BlazeMeter
+
+Upload `tests/hello-world.js` to [BlazeMeter](https://www.blazemeter.com/), select k6 as the engine, and run it in the cloud.
+
+---
+
 ## Descripción
 
 Prueba de Concepto (POC) para integrar **k6**, **Taurus** y **BlazeMeter**, con el objetivo de que el equipo ejecute tests de carga fácilmente en CI/CD y que cualquier desarrollador pueda mantenerlos sin necesidad de conocer JavaScript.
@@ -9,13 +60,16 @@ Prueba de Concepto (POC) para integrar **k6**, **Taurus** y **BlazeMeter**, con 
 ```
 poc_k6_blazemeter/
 ├── README.md
+├── package.json
 ├── docker-compose.yml
 ├── .blazemeterrc               # Configuración BlazeMeter
 ├── .github/
 │   └── workflows/
 │       └── performance-tests.yml
+├── tests/
+│   └── hello-world.js          # Basic standalone k6 hello world test (start here)
 ├── k6-tests/
-│   ├── hello-world.js          # Test k6 puro
+│   ├── hello-world.js          # Advanced k6 test with shared config and thresholds
 │   └── config.js               # Configuración compartida
 ├── taurus-tests/
 │   ├── hello-world.yml         # Test Taurus (YAML)
