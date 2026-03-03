@@ -1,0 +1,16 @@
+execution:
+  - scenario: k6_test
+    concurrency: 5
+    ramp-up: 1m
+    hold-for: 10m
+    think-time: 1s
+    iterations: 1000
+		
+scenarios:
+  k6_test:
+    script:
+      path: ./path/to/your/k6/script.js
+
+report:
+  - type: blazemeter
+    apiKey: YOUR_API_KEY_HERE
