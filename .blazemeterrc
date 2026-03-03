@@ -1,0 +1,21 @@
+# BlazeMeter configuration
+# Reference: https://gettaurus.org/docs/BlazemeterReporter/
+#
+# Store your API token in an environment variable or GitHub secret.
+# Never commit real credentials to source control.
+
+[blazemeter]
+# API token – set via environment variable or GitHub secret BLAZEMETER_API_TOKEN
+token = ${BLAZEMETER_API_TOKEN}
+
+# Project name shown in BlazeMeter UI
+project = poc_k6_blazemeter
+
+# Test name shown in BlazeMeter UI
+test    = Hello World Load Test
+
+# Location for cloud execution (optional)
+# location = us-east-1
+
+# Number of cloud engines (optional, default 1)
+# engines = 1

@@ -1,0 +1,30 @@
+# Taurus Hello World Test
+#
+# A simple load test using Taurus YAML syntax.
+# This is the easiest entry point for developers unfamiliar with JavaScript/k6.
+#
+# Run locally:
+#   bzt taurus-tests/hello-world.yml
+#
+# Run via BlazeMeter:
+#   bzt taurus-tests/hello-world.yml -o modules.blazemeter.token=${BLAZEMETER_API_TOKEN}
+
+execution:
+  - executor: k6
+    concurrency: 1
+    hold-for: 30s
+    scenario: hello-world
+
+scenarios:
+  hello-world:
+    script: k6-tests/hello-world.js
+
+reporting:
+  - module: final-stats
+    summary: true
+    percentiles: true
+  - module: console
+
+settings:
+  env:
+    TARGET_URL: "https://demoblaze.com"

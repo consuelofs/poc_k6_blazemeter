@@ -1,0 +1,22 @@
+# Test results / reports
+reports/
+results/
+*.xml
+*.json
+
+# Taurus artifacts
+/artifacts/
+/bzt.log
+
+# Node / npm
+node_modules/
+npm-debug.log*
+
+# Python / Taurus
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db

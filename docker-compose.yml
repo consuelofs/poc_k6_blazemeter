@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  k6:
+    image: grafana/k6:latest
+    working_dir: /scripts
+    volumes:
+      - .:/scripts
+    entrypoint: ["k6", "run"]
+    command: ["k6-tests/hello-world.js"]
+    environment:
+      - K6_OUT=json=results/k6-output.json
+
+  taurus:
+    image: blazemeter/taurus:latest
+    working_dir: /bzt-configs
+    volumes:
+      - .:/bzt-configs
+      - ./reports:/bzt-configs/reports
+    command: ["taurus-tests/hello-world.yml"]
+    environment:
+      - TARGET_URL=${TARGET_URL:-https://demoblaze.com}
+      - BLAZEMETER_API_TOKEN=${BLAZEMETER_API_TOKEN:-}
