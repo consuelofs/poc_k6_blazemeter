@@ -1,0 +1,37 @@
+# Taurus Load Curve Test
+#
+# Demonstrates a realistic ramp-up / sustained load / ramp-down pattern.
+# Useful for soak tests and capacity planning.
+#
+# Run locally:
+#   bzt taurus-tests/loadcurve.yml
+#
+# Run via BlazeMeter cloud:
+#   bzt taurus-tests/loadcurve.yml -o modules.blazemeter.token=${BLAZEMETER_API_TOKEN}
+
+execution:
+  - executor: k6
+    scenario: load-curve
+    # Ramp up to 10 VUs over 1 min, hold for 3 min, ramp down over 1 min
+    stages:
+      - duration: 1m
+        target: 10
+      - duration: 3m
+        target: 10
+      - duration: 1m
+        target: 0
+
+scenarios:
+  load-curve:
+    script: k6-tests/hello-world.js
+
+reporting:
+  - module: final-stats
+    summary: true
+    percentiles: true
+  - module: junit-xml
+    filename: reports/loadcurve-results.xml
+
+settings:
+  env:
+    TARGET_URL: "https://demoblaze.com"
